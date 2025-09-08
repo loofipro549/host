@@ -1,0 +1,165 @@
+{
+  "users": {
+    "595041765": {
+      "id": 595041765,
+      "username": "Bloodylofipro",
+      "wallets": {
+        "type": "card",
+        "method": "sber",
+        "card_number": "1111111111111111"
+      },
+      "language": "ru",
+      "balance": 0.0,
+      "referrals": 0
+    },
+    "865648878": {
+      "id": 865648878,
+      "username": "djdnndjdna",
+      "wallets": {},
+      "language": "ru",
+      "balance": 0.0,
+      "referrals": 0
+    },
+    "1802110243": {
+      "id": 1802110243,
+      "username": "paveldurovVV0",
+      "wallets": {},
+      "language": "ru",
+      "balance": 0.0,
+      "referrals": 0
+    },
+    "5142424997": {
+      "id": 5142424997,
+      "username": "xileder",
+      "wallets": {},
+      "language": "ru",
+      "balance": 0.0,
+      "referrals": 0
+    }
+  },
+  "deals": {
+    "do6gz36veii": {
+      "id": "do6gz36veii",
+      "seller_id": "865648878",
+      "seller_username": "djdnndjdna",
+      "amount": "1",
+      "currency": "STARS",
+      "description": "1",
+      "pay_address": "UQAMwOPq3-uIJKc6TnVHkuVj5ch7D6BCYIOzCkAMPbqrcVFn",
+      "seller_success": 0
+    },
+    "d85i3ipxawk": {
+      "id": "d85i3ipxawk",
+      "seller_id": "595041765",
+      "seller_username": "Bloodylofipro",
+      "amount": "0",
+      "currency": "STARS",
+      "description": "д",
+      "pay_address": "UQAMwOPq3-uIJKc6TnVHkuVj5ch7D6BCYIOzCkAMPbqrcVFn",
+      "seller_success": 0
+    },
+    "dkshhbt9qop": {
+      "id": "dkshhbt9qop",
+      "seller_id": "865648878",
+      "seller_username": "djdnndjdna",
+      "amount": "1",
+      "currency": "STARS",
+      "description": "в\\",
+      "pay_address": "UQAMwOPq3-uIJKc6TnVHkuVj5ch7D6BCYIOzCkAMPbqrcVFn",
+      "seller_success": 0
+    },
+    "dyi00pm7mkl": {
+      "id": "dyi00pm7mkl",
+      "seller_id": "865648878",
+      "seller_username": "djdnndjdna",
+      "amount": "123",
+      "currency": "STARS",
+      "description": "123",
+      "pay_address": "UQAMwOPq3-uIJKc6TnVHkuVj5ch7D6BCYIOzCkAMPbqrcVFn",
+      "seller_success": 0
+    },
+    "ddksvwqrvjo": {
+      "id": "ddksvwqrvjo",
+      "seller_id": "865648878",
+      "seller_username": "djdnndjdna",
+      "amount": "3",
+      "currency": "STARS",
+      "description": "3",
+      "pay_address": "UQAMwOPq3-uIJKc6TnVHkuVj5ch7D6BCYIOzCkAMPbqrcVFn",
+      "seller_success": 0,
+      "paid": true
+    },
+    "ds97rny5mo4": {
+      "id": "ds97rny5mo4",
+      "seller_id": "5142424997",
+      "seller_username": "xileder",
+      "amount": "222",
+      "currency": "STARS",
+      "description": "Пепе",
+      "pay_address": "UQAMwOPq3-uIJKc6TnVHkuVj5ch7D6BCYIOzCkAMPbqrcVFn",
+      "seller_success": 0,
+      "paid": true
+    },
+    "d4hb6i7c3th": {
+      "id": "d4hb6i7c3th",
+      "seller_id": "5142424997",
+      "seller_username": "xileder",
+      "amount": "29292",
+      "currency": "STARS",
+      "description": "Пошел нахуй долбоеб купи если сосал у Полины пруденко",
+      "pay_address": "UQAMwOPq3-uIJKc6TnVHkuVj5ch7D6BCYIOzCkAMPbqrcVFn",
+      "seller_success": 0
+    },
+    "d9ml1zqdz12": {
+      "id": "d9ml1zqdz12",
+      "seller_id": "865648878",
+      "seller_username": "djdnndjdna",
+      "amount": "3",
+      "currency": "RUB",
+      "description": "t",
+      "pay_address": "",
+      "seller_success": 0,
+      "buyer_id": "595041765",
+      "buyer_username": "Bloodylofipro",
+      "paid": true
+    },
+    "dt6jfd5k1n5": {
+      "id": "dt6jfd5k1n5",
+      "seller_id": "1802110243",
+      "seller_username": "paveldurovVV0",
+      "amount": "3000",
+      "currency": "RUB",
+      "description": "10 кепок",
+      "pay_address": "",
+      "seller_success": 0,
+      "buyer_username": "xileder"
+    },
+    "d4wi2m57fb3": {
+      "id": "d4wi2m57fb3",
+      "seller_id": "5142424997",
+      "seller_username": "xileder",
+      "amount": "33839",
+      "currency": "RUB",
+      "description": "Сосал зуй у Полины пруденки а хуесосина ?",
+      "pay_address": "",
+      "seller_success": 1,
+      "buyer_id": "1802110243",
+      "buyer_username": "paveldurovVV0",
+      "paid": true,
+      "completed": true
+    },
+    "ddpixm2ah0n": {
+      "id": "ddpixm2ah0n",
+      "seller_id": "5142424997",
+      "seller_username": "xileder",
+      "amount": "383838",
+      "currency": "RUB",
+      "description": "Ты уебище и сосун у Полины пруденки",
+      "pay_address": "",
+      "seller_success": 0,
+      "buyer_id": "1802110243",
+      "buyer_username": "paveldurovVV0",
+      "paid": true
+    }
+  }
+}
