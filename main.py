@@ -147,45 +147,47 @@ async def cmd_start(message: types.Message):
                 save_data()
         except Exception:
             pass
-    if args.startswith("deal_") or args.startswith("d"):
-        deal_id = args
-        deal = DATA["deals"].get(deal_id)
-        if deal:
-            deal['buyer_id'] = str(message.from_user.id)
-            deal['buyer_username'] = message.from_user.username or message.from_user.first_name
-            
-            deal.setdefault('seller_success', random.randint(3, 160))
-            
-            save_data()
-            caption = (
-                f"<b>💳 Информация о сделке #{deal_id}</b>\n\n"
-                f"<b>👤 Вы покупатель</b> в сделке.\n"
-                f"<b>📌 Продавец:</b> @{deal['seller_username']} ({deal['seller_id']})\n"
-                f"• Успешные сделки: {deal.get('seller_success', 0)}\n\n"
-                f"• <b>Вы покупаете:</b> {deal['description']}\n\n"
-                f"🏦 Адрес для оплаты: {deal['pay_address']}\n\n"
-                f"<b>💰 Сумма:</b> {deal['amount']} {deal['currency']}\n\n"
-                f"📝 Комментарий к платежу (мемо): {deal_id}\n\n"
-                f"⚠️ Пожалуйста, убедитесь в правильности данных перед оплатой. Комментарий обязателен!"
+if args.startswith("deal_") or args.startswith("d"):
+    deal_id = args
+    deal = DATA["deals"].get(deal_id)
+    if deal:
+        deal['buyer_id'] = str(message.from_user.id)
+        deal['buyer_username'] = message.from_user.username or message.from_user.first_name
+
+        deal.setdefault('seller_success', random.randint(3, 160))
+
+        save_data()
+        caption = (
+            f"<b>💳 Информация о сделке #{deal_id}</b>\n\n"
+            f"<b>👤 Вы покупатель</b> в сделке.\n"
+            f"<b>📌 Продавец:</b> @{deal['seller_username']} ({deal['seller_id']})\n"
+            f"• Успешные сделки: {deal.get('seller_success', 0)}\n\n"
+            f"• <b>Вы покупаете:</b> {deal['description']}\n\n"
+            f"🏦 Адрес для оплаты: {deal['pay_address']}\n\n"
+            f"<b>💰 Сумма:</b> {deal['amount']} {deal['currency']}\n\n"
+            f"📝 Комментарий к платежу (мемо): {deal_id}\n\n"
+            f"⚠️ Пожалуйста, убедитесь в правильности данных перед оплатой. Комментарий обязателен!"
+        )
+        kb = InlineKeyboardMarkup(row_width=1)
+        kb.add(InlineKeyboardButton("🔗 Открыть в Toonkeper", url="https://tonkeeper.com/"))
+        kb.add(InlineKeyboardButton("❌ Выйти из сделки", callback_data=f"exitdeal_{deal_id}"))
+
+        if message.from_user.id in ADMIN_IDS:
+            kb.add(InlineKeyboardButton("✅ Подтвердить оплату", callback_data=f"confirm_payment_{deal_id}"))
+
+        await send_photo_with_caption(message.chat.id, caption, reply_markup=kb)
+
+        try:
+            seller_chat = int(deal['seller_id'])
+            await send_photo_with_caption(
+                seller_chat,
+                f"👤 Пользователь @{deal['buyer_username']} ({deal['buyer_id']}) присоединился к сделке #{deal_id}\n"
+                f"• Успешные сделки: {deal.get('seller_success',0)}\n\n"
+                f"⚠️ Проверьте, что это тот же пользователь, с которым вы вели диалог ранее!\n"
+                f"Не переводите подарок до получения подтверждения оплаты в этом чате!"
             )
-            kb = InlineKeyboardMarkup(row_width=1)
-            kb.add(InlineKeyboardButton("🔗 Открыть в Toonkeper", url="https://tonkeeper.com/"))
-            kb.add(InlineKeyboardButton("❌ Выйти из сделки", callback_data=f"exitdeal_{deal_id}"))
-            
-            if message.from_user.id in ADMIN_IDS:
-                kb.add(InlineKeyboardButton("✅ Подтвердить оплату", callback_data=f"confirm_payment_{deal_id}"))
-            await send_photo_with_caption(message.chat.id, caption, reply_markup=kb)
-            try:
-               seller_chat = int(deal['seller_id'])
-               await send_photo_with_caption(
-                   seller_chat,
-                   f"👤 Пользователь @{deal['buyer_username']} ({deal['buyer_id']}) присоединился к сделке #{deal_id}\n"
-                   f"• Успешные сделки: {deal.get('seller_success',0)}\n\n"
-                   f"⚠️ Проверьте, что это тот же пользователь, с которым вы вели диалог ранее!\n"
-                   f"Не переводите подарок до получения подтверждения оплаты в этом чате!"
-               )
-           except Exception:
-               pass
+        except Exception:
+            pass
 
         return
     caption = (
