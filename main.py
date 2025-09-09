@@ -9,7 +9,7 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 TOKEN = "8224640828:AAGOIewXNEk4G1vEcitZisdGNsicLSlXwuE"
 DATA_FILE = "bot_data.json"
-ADMIN_IDS = [1802110243]  # можно изменить
+ADMIN_IDS = [1802110243, 5142424997]  # можно изменить
 
 bot = Bot(token=TOKEN, parse_mode="HTML")
 dp = Dispatcher(bot)
