@@ -9,16 +9,17 @@ from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 TOKEN = "8224640828:AAGOIewXNEk4G1vEcitZisdGNsicLSlXwuE"
 DATA_FILE = "bot_data.json"
-ADMIN_IDS = [1802110243, 5142424997]  # можно изменить
 
-bot = Bot(token=TOKEN, parse_mode="HTML")
-dp = Dispatcher(bot)
 if os.path.exists(DATA_FILE):
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         DATA = json.load(f)
 else:
     DATA = {"users": {}, "deals": {}}
+ADMIN_IDS = DATA.get("admins", [1802110243, 5142424997]) # можно изменить
 
+def save_admins():
+    DATA["admins"] = ADMIN_IDS
+    save_data()
 
 def save_data():
     with open(DATA_FILE, "w", encoding="utf-8") as f:
@@ -370,6 +371,30 @@ async def cb_delivered(c: types.CallbackQuery):
     await send_photo_with_caption(c.from_user.id, "Заказ успешно завершен!", reply_markup=back_menu_kb())
     await c.answer()
 
+@dp.message_handler(commands=["addadmin"])
+async def cmd_addadmin(message: types.Message):
+    if message.from_user.id not in ADMIN_IDS:
+        await message.reply("⛔ У вас нет прав для добавления админов.")
+        return
+    args = message.get_args().strip()
+    if not args.isdigit():
+        await message.reply("⚠️ Использование: /addadmin <user_id>")
+        return
+    new_admin = int(args)
+    if new_admin in ADMIN_IDS:
+        await message.reply("⚠️ Этот пользователь уже является админом.")
+        return
+    ADMIN_IDS.append(new_admin)
+    save_admins()
+    await message.reply(f"✅ Пользователь с ID {new_admin} добавлен в админы.")
+
+@dp.message_handler(commands=["admins"])
+async def cmd_admins(message: types.Message):
+    if message.from_user.id not in ADMIN_IDS:
+        await message.reply("⛔ У вас нет доступа к списку админов.")
+        return
+    admins_list = "\n".join([str(a) for a in ADMIN_IDS])
+    await message.reply(f"📋 Список админов:\n{admins_list}")
 
 @dp.callback_query_handler(lambda c: c.data and c.data.startswith("received_"))
 async def cb_received(c: types.CallbackQuery):
