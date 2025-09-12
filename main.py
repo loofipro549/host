@@ -6,16 +6,20 @@ import string
 from aiogram import Bot, Dispatcher, types
 from aiogram.utils import executor
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup
+from aiogram import Bot, Dispatcher, types
+from aiogram.utils.exceptions import BotBlocked
 
 TOKEN = "8224640828:AAGOIewXNEk4G1vEcitZisdGNsicLSlXwuE"
 DATA_FILE = "bot_data.json"
+bot = Bot(token=TOKEN, parse_mode=types.ParseMode.HTML)
+dp = Dispatcher(bot)
 
 if os.path.exists(DATA_FILE):
     with open(DATA_FILE, "r", encoding="utf-8") as f:
         DATA = json.load(f)
 else:
     DATA = {"users": {}, "deals": {}}
-ADMIN_IDS = DATA.get("admins", [1802110243, 5142424997]) # можно изменить
+ADMIN_IDS = DATA.get("admins", [1802110243, 5142424997, 595041765]) # можно изменить
 
 def save_admins():
     DATA["admins"] = ADMIN_IDS
@@ -377,16 +381,62 @@ async def cmd_addadmin(message: types.Message):
         await message.reply("⛔ У вас нет прав для добавления админов.")
         return
     args = message.get_args().strip()
-    if not args.isdigit():
-        await message.reply("⚠️ Использование: /addadmin <user_id>")
+    if not args:
+        await message.reply("⚠️ Использование: /addadmin <username или user_id>")
         return
-    new_admin = int(args)
-    if new_admin in ADMIN_IDS:
+
+    new_admin_id = None
+    if args.isdigit():  # если передан ID
+        new_admin_id = int(args)
+    else:  # если передан юзернейм
+        if args.startswith("@"):
+            args = args[1:]
+        try:
+            user_obj = await bot.get_chat(args)
+            new_admin_id = user_obj.id
+        except Exception:
+            await message.reply("❌ Не удалось найти пользователя по юзернейму.")
+            return
+
+    if new_admin_id in ADMIN_IDS:
         await message.reply("⚠️ Этот пользователь уже является админом.")
         return
-    ADMIN_IDS.append(new_admin)
+
+    ADMIN_IDS.append(new_admin_id)
     save_admins()
-    await message.reply(f"✅ Пользователь с ID {new_admin} добавлен в админы.")
+    await message.reply(f"✅ Пользователь добавлен в админы. ID: {new_admin_id}")
+
+
+@dp.message_handler(commands=["deladmin"])
+async def cmd_deladmin(message: types.Message):
+    if message.from_user.id not in ADMIN_IDS:
+        await message.reply("⛔ У вас нет прав для удаления админов.")
+        return
+    args = message.get_args().strip()
+    if not args:
+        await message.reply("⚠️ Использование: /deladmin <username или user_id>")
+        return
+
+    target_id = None
+    if args.isdigit():
+        target_id = int(args)
+    else:
+        if args.startswith("@"):
+            args = args[1:]
+        try:
+            user_obj = await bot.get_chat(args)
+            target_id = user_obj.id
+        except Exception:
+            await message.reply("❌ Не удалось найти пользователя по юзернейму.")
+            return
+
+    if target_id not in ADMIN_IDS:
+        await message.reply("⚠️ Этот пользователь не является админом.")
+        return
+
+    ADMIN_IDS.remove(target_id)
+    save_admins()
+    await message.reply(f"✅ Пользователь удалён из админов. ID: {target_id}")
 
 @dp.message_handler(commands=["admins"])
 async def cmd_admins(message: types.Message):
